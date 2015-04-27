@@ -5,8 +5,8 @@ authors = ["monsieursquirrel"]
 
 [lib]
 name = "example_2_1"
-path = "chapter_2/example_2_1/src/customer.rs"
+path = "chapter_2/example_2_1/customer.rs"
 
 [[bin]]
 name = "chapter_10_putting_it_all_together"
-path = "chapter_10/putting_it_all_together/src/main.rs"
+path = "chapter_10/putting_it_all_together/main.rs"
