@@ -3,9 +3,13 @@ name = "becoming-functional-in-rust"
 version = "0.1.0"
 authors = ["monsieursquirrel"]
 
-[lib]
+[[bin]]
 name = "example_2_1"
 path = "chapter_2/example_2_1.rs"
+
+[[bin]]
+name = "example_2_4_rusty"
+path = "chapter_2/example_2_4_rusty.rs"
 
 [[bin]]
 name = "chapter_10_putting_it_all_together"

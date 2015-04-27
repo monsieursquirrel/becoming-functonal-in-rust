@@ -64,3 +64,7 @@ pub struct Customer {
   pub domain: String,
   pub enabled: bool
 }
+
+fn main() {
+  // something
+}
