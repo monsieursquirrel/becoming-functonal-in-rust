@@ -18,7 +18,7 @@ impl AllCustomers {
     let mut outlist: Vec<String> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.name.clone())
+        outlist.push(customer.name.clone());
       }
     }
     outlist
@@ -28,7 +28,7 @@ impl AllCustomers {
     let mut outlist: Vec<String> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.state.clone())
+        outlist.push(customer.state.clone());
       }
     }
     outlist
@@ -38,7 +38,7 @@ impl AllCustomers {
     let mut outlist: Vec<String> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.primary_contact.clone())
+        outlist.push(customer.primary_contact.clone());
       }
     }
     outlist
@@ -48,7 +48,7 @@ impl AllCustomers {
     let mut outlist: Vec<String> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.domain.clone())
+        outlist.push(customer.domain.clone());
       }
     }
     outlist
