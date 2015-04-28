@@ -24,6 +24,16 @@ impl AllCustomers {
     outlist
   }
 
+  pub fn get_enabled_customer_addresses(&self) -> Vec<String> {
+    let mut outlist: Vec<String> = vec!();
+    for customer in self.all_customers.iter() {
+      if customer.enabled {
+        outlist.push(customer.address.clone());
+      }
+    }
+    outlist
+  }
+
   pub fn get_enabled_customer_states(&self) -> Vec<String> {
     let mut outlist: Vec<String> = vec!();
     for customer in self.all_customers.iter() {
