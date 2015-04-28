@@ -14,51 +14,51 @@ impl AllCustomers {
     }
   }
 
-  pub fn get_enabled_customer_names(&self) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_names(&self) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.name.clone());
+        outlist.push(&customer.name);
       }
     }
     outlist
   }
 
-  pub fn get_enabled_customer_addresses(&self) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_addresses(&self) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.address.clone());
+        outlist.push(&customer.address);
       }
     }
     outlist
   }
 
-  pub fn get_enabled_customer_states(&self) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_states(&self) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.state.clone());
+        outlist.push(&customer.state);
       }
     }
     outlist
   }
 
-  pub fn get_enabled_customer_primary_contacts(&self) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_primary_contacts(&self) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.primary_contact.clone());
+        outlist.push(&customer.primary_contact);
       }
     }
     outlist
   }
 
-  pub fn get_enabled_customer_domains(&self) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_domains(&self) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
-        outlist.push(customer.domain.clone());
+        outlist.push(&customer.domain);
       }
     }
     outlist

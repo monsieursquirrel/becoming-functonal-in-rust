@@ -23,16 +23,16 @@ impl AllCustomers {
     }
   }
 
-  pub fn get_enabled_customer_field(&self, field: FieldName) -> Vec<String> {
-    let mut outlist: Vec<String> = vec!();
+  pub fn get_enabled_customer_field(&self, field: FieldName) -> Vec<&str> {
+    let mut outlist: Vec<&str> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
         match field {
-          FieldName::Name => { outlist.push(customer.name.clone()); },
-          FieldName::State => { outlist.push(customer.state.clone()); },
-          FieldName::PrimaryContact => { outlist.push(customer.primary_contact.clone()); },
-          FieldName::Domain => { outlist.push(customer.domain.clone()); },
-          FieldName::Address => { outlist.push(customer.address.clone()); },
+          FieldName::Name => { outlist.push(&customer.name); },
+          FieldName::State => { outlist.push(&customer.state); },
+          FieldName::PrimaryContact => { outlist.push(&customer.primary_contact); },
+          FieldName::Domain => { outlist.push(&customer.domain); },
+          FieldName::Address => { outlist.push(&customer.address); },
         }
       }
     }

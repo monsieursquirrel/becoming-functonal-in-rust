@@ -1,8 +1,3 @@
-// Example 2.6 in context
-
-// A trait would be a more direct translation of an interface.
-// However it would be very heavy in a situation where no actual struct data is
-// required.
 pub type ConversionFunction = fn(&Customer) -> String;
 
 pub struct AllCustomers {
@@ -18,28 +13,32 @@ impl AllCustomers {
     }
   }
 
-  pub fn get_enabled_customer_names(&self) -> Vec<String> {
+  pub fn get_enabled_customer_names(&self) -> Vec<&str> {
     self.get_enabled_customer_field(customer_name)
   }
 
-  pub fn get_enabled_customer_addresses(&self) -> Vec<String> {
+  pub fn get_enabled_customer_addresses(&self) -> Vec<&str> {
     self.get_enabled_customer_field(customer_address)
   }
 
-  pub fn get_enabled_customer_states(&self) -> Vec<String> {
+  pub fn get_enabled_customer_states(&self) -> Vec<&str> {
     self.get_enabled_customer_field(customer_state)
   }
 
-  pub fn get_enabled_customer_primary_contacts(&self) -> Vec<String> {
+  pub fn get_enabled_customer_primary_contacts(&self) -> Vec<&str> {
     self.get_enabled_customer_field(customer_primary_contact)
   }
 
-  pub fn get_enabled_customer_domains(&self) -> Vec<String> {
+  pub fn get_enabled_customer_domains(&self) -> Vec<&str> {
     self.get_enabled_customer_field(customer_domain)
   }
 
-  pub fn get_enabled_customer_field<B>(&self, func: fn(&Customer) -> B) -> Vec<B> {
-    let mut outlist: Vec<B> = vec!();
+  pub fn get_enabled_customers(&self) -> Vec<&Customer> {
+    self.get_enabled_customer_field(customer_as_customer)
+  }
+
+  pub fn get_enabled_customer_field<B: ?Sized>(&self, func: fn(&Customer) -> &B) -> Vec<&B> {
+    let mut outlist: Vec<&B> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
         outlist.push(func(customer));
@@ -49,24 +48,28 @@ impl AllCustomers {
   }
 }
 
-fn customer_name(customer: &Customer) -> String {
-  customer.name.clone()
+fn customer_name(customer: &Customer) -> &str {
+  &customer.name
 }
 
-fn customer_address(customer: &Customer) -> String {
-  customer.address.clone()
+fn customer_address(customer: &Customer) -> &str {
+  &customer.address
 }
 
-fn customer_state(customer: &Customer) -> String {
-  customer.state.clone()
+fn customer_state(customer: &Customer) -> &str {
+  &customer.state
 }
 
-fn customer_primary_contact(customer: &Customer) -> String {
-  customer.primary_contact.clone()
+fn customer_primary_contact(customer: &Customer) -> &str {
+  &customer.primary_contact
 }
 
-fn customer_domain(customer: &Customer) -> String {
-  customer.domain.clone()
+fn customer_domain(customer: &Customer) -> &str {
+  &customer.domain
+}
+
+fn customer_as_customer(customer: &Customer) -> &Customer {
+  customer
 }
 
 pub struct Customer {
