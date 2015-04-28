@@ -1,7 +1,9 @@
 // A couple of issues to note on this one:
 // - Rust treats each closure (not really distinct from lambdas) as a different
 //   type, this means that the function parameter on get_enabled_customer_field
-//   has to be made generic.
+//   has to be made generic. The knock on effect of this is that the return type
+//   doesn't have to be a reference as the lifetime is now determines when the
+//   generic is instantiated.
 // - Type inference was guessing that the closures wanted to return references
 //   to String when the functions are returning a vector of string slices
 //   (&str). Fixed by explicitly slicing the whole string using [..].
@@ -48,10 +50,10 @@ impl AllCustomers {
     self.get_enabled_customer_field(|customer| { customer })
   }
 
-  pub fn get_enabled_customer_field<B: ?Sized, F>(&self, func: F) -> Vec<&B>
-    where F: Fn(&Customer) -> &B {
+  pub fn get_enabled_customer_field<'a, B, F>(&'a self, func: F) -> Vec<B>
+    where F: Fn(&'a Customer) -> B {
 
-    let mut outlist: Vec<&B> = vec!();
+    let mut outlist: Vec<B> = vec!();
     for customer in self.all_customers.iter() {
       if customer.enabled {
         outlist.push(func(customer));
