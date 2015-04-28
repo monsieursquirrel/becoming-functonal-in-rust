@@ -7,7 +7,7 @@ pub struct AllCustomers {
 }
 
 impl AllCustomers {
-  pub fn new() -> AllCustomers {
+  pub fn new() -> Self {
     AllCustomers {
       all_customers: vec!(),
       id: 0
