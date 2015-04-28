@@ -21,5 +21,9 @@ name = "example_2_11"
 path = "chapter_2/example_2_11.rs"
 
 [[bin]]
+name = "example_2_14"
+path = "chapter_2/example_2_14.rs"
+
+[[bin]]
 name = "chapter_10_putting_it_all_together"
 path = "chapter_10/putting_it_all_together/main.rs"
