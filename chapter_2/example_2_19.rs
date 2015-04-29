@@ -1,5 +1,6 @@
 // In Rust, list operations such as filtering and mapping are usually performed
-// on iterators. These behave lazily unless you loop over them or collect() them.
+// on iterators. These behave lazily unless you loop over them or collect()
+// them.
 
 pub fn get_enabled_customer_names(&self) -> Vec<&str> {
   self.all_customers.iter().filter(|customer| {
