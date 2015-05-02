@@ -23,43 +23,41 @@ impl Contract {
 
 impl AllCustomers {
 
-  // the most logical place for this function to be in a Rust program would be
-  // attached to AllCustomers
-
-  pub fn set_contract_enabled_for_customer(&mut self, customer_id: usize) {
-    for customer in self.get_customer_by_id(customer_id) {
-      customer.contract.enabled = true;
-    }
-  }
-
-  pub fn get_customer_by_id(&mut self, customer_id: usize) -> Vec<&mut Customer> {
-    return self.filter(|customer| { customer.id == customer_id })
-  }
-
-  pub fn filter<T>(&mut self, test: T) -> Vec<&mut Customer>
-    where T: Fn(&Customer) -> bool {
-    let mut outlist: Vec<&mut Customer> = vec!();
-    for customer in &mut self.all_customers {
-      if test(customer) {
-        outlist.push(customer)
-      }
-    }
-    outlist
-  }
-
   pub fn get_field<'a, B, F>(&'a mut self,
                              test: fn(&Customer) -> bool,
                              func: F) -> Vec<B>
     where F: Fn(&'a Customer) -> B {
 
     let mut outlist: Vec<B> = vec!();
-    for customer in self.filter(test) {
+    for customer in filter(&mut self.all_customers, test) {
       outlist.push(func(customer));
     }
     outlist
   }
+
+
 }
 
+pub fn filter<T>(inlist: &mut Vec<Customer>, test: T) -> Vec<&mut Customer>
+  where T: Fn(&Customer) -> bool {
+  let mut outlist: Vec<&mut Customer> = vec!();
+  for customer in inlist {
+    if test(customer) {
+      outlist.push(customer)
+    }
+  }
+  outlist
+}
+
+pub fn get_customer_by_id(inlist: &mut Vec<Customer>, customer_id: usize) -> Vec<&mut Customer> {
+  return filter(inlist, |customer| { customer.id == customer_id })
+}
+
+pub fn set_contract_enabled_for_customer(inlist: &mut Vec<Customer>, customer_id: usize) {
+  for customer in get_customer_by_id(inlist, customer_id) {
+    customer.contract.enabled = true;
+  }
+}
 
 // --------------- stuff needed by the example code above ----------------
 pub struct AllCustomers {
