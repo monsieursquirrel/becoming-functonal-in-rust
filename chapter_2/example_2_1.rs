@@ -1,18 +1,43 @@
 
+pub struct Customer {
+  id: usize,
+  name: String,
+  address: String,
+  state: String,
+  primary_contact: String,
+  domain: String,
+  enabled: bool
+}
+
+impl Customer {
+  pub fn new() -> Self {
+    Customer {
+      id: 0,
+      name: "".to_string(),
+      address: "".to_string(),
+      state: "".to_string(),
+      primary_contact: "".to_string(),
+      domain: "".to_string(),
+      enabled: true,
+    }
+  }
+}
+
 // First change from the book - no statics!*
+// Instead, I'm using this struct to store the customer list. This can be owned
+// by whatever bit of code needs to work on the customer list.
 //
 // *technically, statics do exist in Rust. However, the compiler has to be very
 // strict about not modifying them as they are shared data.
+
 pub struct AllCustomers {
-  pub all_customers: Vec<Customer>,
-  pub id: usize,
+  all_customers: Vec<Customer>,
 }
 
 impl AllCustomers {
   pub fn new() -> Self {
     AllCustomers {
       all_customers: vec!(),
-      id: 0
     }
   }
 
@@ -65,16 +90,6 @@ impl AllCustomers {
     }
     outlist
   }
-}
-
-
-pub struct Customer {
-  pub name: String,
-  pub address: String,
-  pub state: String,
-  pub primary_contact: String,
-  pub domain: String,
-  pub enabled: bool
 }
 
 fn main() {

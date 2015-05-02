@@ -37,10 +37,9 @@ impl AllCustomers {
 }
 
 
-// --------------- stuff needed by the example code above ----------------
+// ---------- stuff needed by the example code above (minimal version) --------
 pub struct AllCustomers {
-  pub all_customers: Vec<Customer>,
-  pub id: usize,
+  all_customers: Vec<Customer>,
 }
 
 pub struct Customer {

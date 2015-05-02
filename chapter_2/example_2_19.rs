@@ -3,17 +3,15 @@
 // them.
 
 pub fn get_enabled_customer_names(&self) -> Vec<&str> {
-  self.all_customers.iter().filter(|customer| {
-    customer.enabled
-  }).map(|customer| {
-    &customer.name[..]
-  }).collect()
+  self.all_customers.iter()
+    .filter(|customer| { customer.enabled })
+    .map(|customer| { &customer.name[..] })
+    .collect()
 }
 
 pub fn get_disabled_customer_names(&self) -> Vec<&str> {
-  self.all_customers.iter().filter(|customer| {
-    !customer.enabled
-  }).map(|customer| {
-    &customer.name[..]
-  }).collect()
+  self.all_customers.iter()
+    .filter(|customer| { !customer.enabled })
+    .map(|customer| { &customer.name[..] })
+    .collect()
 }

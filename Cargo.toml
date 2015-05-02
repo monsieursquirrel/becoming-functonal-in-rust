@@ -28,10 +28,13 @@ path = "chapter_2/example_2_14.rs"
 name = "example_2_16"
 path = "chapter_2/example_2_16.rs"
 
-
 [[bin]]
 name = "example_3_1"
 path = "chapter_3/example_3_1.rs"
+
+[[bin]]
+name = "example_3_29"
+path = "chapter_3/example_3_29.rs"
 
 [[bin]]
 name = "c3_scratchpad_1"

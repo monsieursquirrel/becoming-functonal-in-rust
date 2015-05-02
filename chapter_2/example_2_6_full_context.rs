@@ -7,14 +7,12 @@ pub type ConversionFunction = fn(&Customer) -> &str;
 
 pub struct AllCustomers {
   pub all_customers: Vec<Customer>,
-  pub id: usize,
 }
 
 impl AllCustomers {
   pub fn new() -> Self {
     AllCustomers {
       all_customers: vec!(),
-      id: 0
     }
   }
 
@@ -31,12 +29,13 @@ impl AllCustomers {
 
 
 pub struct Customer {
-  pub name: String,
-  pub address: String,
-  pub state: String,
-  pub primary_contact: String,
-  pub domain: String,
-  pub enabled: bool
+  id: usize,
+  name: String,
+  address: String,
+  state: String,
+  primary_contact: String,
+  domain: String,
+  enabled: bool
 }
 
 

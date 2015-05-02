@@ -125,19 +125,17 @@ pub fn set_contract_enabled_for_customer(inlist: &mut Vec<Customer>, customer_id
 // --------------- stuff needed by the example code above ----------------
 pub struct AllCustomers {
   pub all_customers: Vec<Customer>,
-  pub id: usize,
 }
 
 pub struct Customer {
   id: usize,
+  name: String,
+  address: String,
+  state: String,
+  primary_contact: String,
+  domain: String,
+  enabled: bool,
   contract: Contract,
-
-  pub name: String,
-  pub address: String,
-  pub state: String,
-  pub primary_contact: String,
-  pub domain: String,
-  pub enabled: bool
 }
 
 fn main() {
