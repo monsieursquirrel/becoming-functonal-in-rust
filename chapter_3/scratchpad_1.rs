@@ -4,6 +4,7 @@ extern crate chrono;
 
 use chrono::{Date, Local, Duration};
 
+#[derive(Debug)]
 pub struct Contract {
   // Date<Local> is a date in the local timezone
   begin_date: Date<Local>,
@@ -59,34 +60,30 @@ impl Customer {
 
 impl AllCustomers {
 
-  pub fn get_field<'a, B, F>(&'a mut self,
-                             test: fn(&Customer) -> bool,
-                             func: F) -> Vec<B>
-    where F: Fn(&'a Customer) -> B {
-
-    let mut outlist: Vec<B> = vec!();
-    for customer in filter(&mut self.all_customers, test) {
-      outlist.push(func(customer));
-    }
-    outlist
-  }
 
   pub fn set_contract_for_customer(inlist: &mut Vec<Customer>,
                                    customer_id: usize,
-                                   status: bool) {
+                                   status: bool) -> Vec<&mut Contract> {
     map(get_customer_by_id(inlist, customer_id), |customer| {
       customer.contract.set_enabled(status)
-    });
+    })
+  }
+
+  pub fn print_set_contract_for_customer(inlist: &mut Vec<Customer>,
+                                         customer_id: usize,
+                                         status: bool) {
+    for_each(Self::set_contract_for_customer(inlist, customer_id, status),
+            |contract| { println!("{:?}", contract); })
   }
 
 }
 
-pub fn filter<T>(inlist: &mut Vec<Customer>, test: T) -> Vec<&mut Customer>
-  where T: Fn(&Customer) -> bool {
-  let mut outlist: Vec<&mut Customer> = vec!();
-  for customer in inlist {
-    if test(customer) {
-      outlist.push(customer)
+pub fn filter<T, A>(inlist: &mut Vec<A>, test: T) -> Vec<&mut A>
+  where T: Fn(&A) -> bool {
+  let mut outlist: Vec<&mut A> = vec!();
+  for obj in inlist {
+    if test(obj) {
+      outlist.push(obj)
     }
   }
   outlist
@@ -102,10 +99,10 @@ pub fn map<T, A, B>(inlist: Vec<A>, func: T) -> Vec<B>
 }
 
 
-pub fn for_each<F>(inlist: Vec<&mut Customer>, func: F)
-  where F: Fn(&mut Customer){
-  for customer in inlist {
-    func(customer);
+pub fn for_each<F, A>(inlist: Vec<A>, func: F)
+  where F: Fn(A){
+  for obj in inlist {
+    func(obj);
   }
 }
 
