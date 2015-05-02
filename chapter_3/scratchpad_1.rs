@@ -69,13 +69,17 @@ impl AllCustomers {
     })
   }
 
-  pub fn print_set_contract_for_customer(inlist: &mut Vec<Customer>,
+  pub fn print_set_contract_for_customer(&mut self,
                                          customer_id: usize,
                                          status: bool) {
-    for_each(Self::set_contract_for_customer(inlist, customer_id, status),
-            |contract| { println!("{:?}", contract); })
+    self.all_customers.iter_mut().filter(|customer| {
+      customer.id == customer_id
+    }).map(|customer| {
+      customer.contract.set_enabled(status)
+    }).map(|contract| {
+      println!("{:?}", contract)
+    }).count();
   }
-
 }
 
 pub fn filter<T, A>(inlist: &mut Vec<A>, test: T) -> Vec<&mut A>
