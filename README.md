@@ -8,5 +8,5 @@ functional programming so it'll be interesting to see if everything can be
 implemented easily.
 
 
-I've set up Cargo.toml to build the examples that will build; just checkout and run `cargo build`. Obviously, the
-isolated code snippets are not buildable.
+I've set up Cargo.toml to build the examples that will build; just checkout and
+run `cargo build`. Obviously, the isolated code snippets are not buildable.
