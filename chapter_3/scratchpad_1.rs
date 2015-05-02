@@ -49,14 +49,21 @@ pub fn filter<T>(inlist: &mut Vec<Customer>, test: T) -> Vec<&mut Customer>
   outlist
 }
 
+pub fn for_each<F>(inlist: Vec<&mut Customer>, func: F)
+  where F: Fn(&mut Customer){
+  for customer in inlist {
+    func(customer);
+  }
+}
+
 pub fn get_customer_by_id(inlist: &mut Vec<Customer>, customer_id: usize) -> Vec<&mut Customer> {
   return filter(inlist, |customer| { customer.id == customer_id })
 }
 
 pub fn set_contract_enabled_for_customer(inlist: &mut Vec<Customer>, customer_id: usize) {
-  for customer in get_customer_by_id(inlist, customer_id) {
+  for_each(get_customer_by_id(inlist, customer_id), |customer| {
     customer.contract.enabled = true;
-  }
+  });
 }
 
 // --------------- stuff needed by the example code above ----------------

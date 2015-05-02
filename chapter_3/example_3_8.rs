@@ -1,5 +1,5 @@
 // This function isn't linked to AllCustomers in any way anymore so it's
- // better to have it outside the impl AllCustomers block. 
+// better to have it outside the impl AllCustomers block. 
 pub fn filter<T>(inlist: &mut Vec<Customer>, test: T) -> Vec<&mut Customer>
   where T: Fn(&Customer) -> bool {
   let mut outlist: Vec<&mut Customer> = vec!();
