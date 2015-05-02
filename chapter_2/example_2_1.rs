@@ -1,6 +1,8 @@
 
-// First change from the book - no statics!
-// Rust restricts their usage for memory safety reasons.
+// First change from the book - no statics!*
+//
+// *technically, statics do exist in Rust. However, the compiler has to be very
+// strict about not modifying them as they are shared data.
 pub struct AllCustomers {
   pub all_customers: Vec<Customer>,
   pub id: usize,
