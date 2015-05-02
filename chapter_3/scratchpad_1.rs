@@ -26,13 +26,9 @@ impl AllCustomers {
   // the most logical place for this function to be in a Rust program would be
   // attached to AllCustomers
 
-  pub fn set_contract_disabled_for_customer(&mut self, customer_id: usize) {
-    // need to use &mut here to explicitly say the item will be modified
-    // in the loop body
-    for customer in &mut self.all_customers {
-      if customer.id == customer_id {
-        customer.contract.enabled = false;
-      }
+  pub fn set_contract_enabled_for_customer(&mut self, customer_id: usize) {
+    for customer in self.get_customer_by_id(customer_id) {
+      customer.contract.enabled = true;
     }
   }
 
