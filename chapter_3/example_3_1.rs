@@ -4,7 +4,7 @@ use chrono::{Date, Local, Duration};
 
 pub struct Contract {
   // Date<Local> is a date in the local timezone
-  start_date: Date<Local>,
+  begin_date: Date<Local>,
   end_date: Date<Local>,
   enabled: bool,
 }
@@ -12,7 +12,7 @@ pub struct Contract {
 impl Contract {
   pub fn new(begin_date: Date<Local>) -> Contract {
     Contract {
-      start_date: begin_date,
+      begin_date: begin_date,
       end_date: begin_date + Duration::days(2 * 365),
       enabled: true,
     }
