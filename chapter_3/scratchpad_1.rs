@@ -37,13 +37,7 @@ impl AllCustomers {
   }
 
   pub fn get_customer_by_id(&mut self, customer_id: usize) -> Vec<&mut Customer> {
-    let mut outlist: Vec<&mut Customer> = vec!();
-    for customer in &mut self.all_customers {
-      if customer.id == customer_id {
-        outlist.push(customer)
-      }
-    }
-    outlist
+    return self.filter(|customer| { customer.id == customer_id })
   }
 
   pub fn filter<T>(&mut self, test: T) -> Vec<&mut Customer>
@@ -57,16 +51,14 @@ impl AllCustomers {
     outlist
   }
 
-  pub fn get_field<'a, B, F>(&'a self,
+  pub fn get_field<'a, B, F>(&'a mut self,
                              test: fn(&Customer) -> bool,
                              func: F) -> Vec<B>
     where F: Fn(&'a Customer) -> B {
 
     let mut outlist: Vec<B> = vec!();
-    for customer in self.all_customers.iter() {
-      if test(customer) {
-        outlist.push(func(customer));
-      }
+    for customer in self.filter(test) {
+      outlist.push(func(customer));
     }
     outlist
   }
