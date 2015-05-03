@@ -13,12 +13,16 @@ pub struct Contract {
 }
 
 impl Contract {
-  pub fn new(begin_date: Date<Local>) -> Contract {
+  pub fn new(begin_date: Date<Local>) -> Self {
     Contract {
       begin_date: begin_date,
       end_date: begin_date + Duration::days(2 * 365),
       enabled: true,
     }
+  }
+
+  pub fn new_today() -> Self {
+    Contract::new(Local::today())
   }
 
   pub fn set_begin_date(&mut self, begin_date: Date<Local>) -> &mut Self {
@@ -49,6 +53,19 @@ pub struct Customer {
 }
 
 impl Customer {
+  pub fn new() -> Self {
+    Customer {
+      id: 0,
+      name: "".to_string(),
+      address: "".to_string(),
+      state: "".to_string(),
+      primary_contact: "".to_string(),
+      domain: "".to_string(),
+      enabled: true,
+      contract: Contract::new_today()
+    }
+  }
+
   pub fn set_customer_id(&mut self, id: usize) -> &mut Self {
     self.id = id;
     self
