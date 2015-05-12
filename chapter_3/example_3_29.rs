@@ -4,6 +4,8 @@ extern crate chrono;
 
 use chrono::{Date, Local, Duration};
 
+// Deriving the Debug trait gets us an easy way to print the contents of
+// the struct.
 #[derive(Debug)]
 pub struct Contract {
   // Date<Local> is a date in the local timezone
