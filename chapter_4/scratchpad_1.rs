@@ -99,7 +99,7 @@ impl AllCustomers {
 
     // has an additional step of building a new AllCustomers object so it can
     // be assigned to a suitable variable by the caller
-    pub fn print_set_contract_for_customer(self,
+    pub fn set_contract_for_customer(self,
         ids: Vec<usize>, status: bool) -> Self {
 
         // Note: into_iter() not iter(). This turns the vec

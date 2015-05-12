@@ -3,7 +3,7 @@
 // Note: the preceding item must have its trailing comma; the compiler
 // error in this case is unintuitive.
 
-pub fn print_set_contract_for_customer(self,
+pub fn set_contract_for_customer(self,
     ids: Vec<usize>, status: bool) -> Self {
 
     // Note: into_iter() not iter(). This turns the vec
