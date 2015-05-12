@@ -1,14 +1,13 @@
 // A couple of issues to note on this one:
-// - Rust treats each closure (not really distinct from lambdas) as a different
-//   type, this means that the function parameter on get_enabled_customer_field
-//   has to be made generic. The knock on effect of this is that the return type
-//   doesn't have to be a reference as the lifetime is now determines when the
-//   generic is instantiated.
+// - Closures are memory objects like most other data; when using dynanoc
+//   dispatch, they have to be borrowed.
 // - Type inference was guessing that the closures wanted to return references
 //   to String when the functions are returning a vector of string slices
 //   (&str). Fixed by explicitly slicing the whole string using [..].
-// - get_enabled_customer_field has an example of using a where clause, this is
-//   an alternate way to layout generic bounds which sometimes looks better.
+// - The lifetime of the parameter passed to the closure has to be tied
+//   to the lifetime of self using a lifetime parameter ('a), this could not
+//   be inferred.
+
 
 pub struct AllCustomers {
   all_customers: Vec<Customer>,
@@ -22,31 +21,30 @@ impl AllCustomers {
   }
 
   pub fn get_enabled_customer_names(&self) -> Vec<&str> {
-    self.get_enabled_customer_field(|customer| { &customer.name[..] })
+    self.get_enabled_customer_field(&|customer| { &customer.name[..] })
   }
 
   pub fn get_enabled_customer_addresses(&self) -> Vec<&str> {
-    self.get_enabled_customer_field(|customer| { &customer.address[..] })
+    self.get_enabled_customer_field(&|customer| { &customer.address[..] })
   }
 
   pub fn get_enabled_customer_states(&self) -> Vec<&str> {
-    self.get_enabled_customer_field(|customer| { &customer.state[..] })
+    self.get_enabled_customer_field(&|customer| { &customer.state[..] })
   }
 
   pub fn get_enabled_customer_primary_contacts(&self) -> Vec<&str> {
-    self.get_enabled_customer_field(|customer| { &customer.primary_contact[..] })
+    self.get_enabled_customer_field(&|customer| { &customer.primary_contact[..] })
   }
 
   pub fn get_enabled_customer_domains(&self) -> Vec<&str> {
-    self.get_enabled_customer_field(|customer| { &customer.domain[..] })
+    self.get_enabled_customer_field(&|customer| { &customer.domain[..] })
   }
 
   pub fn get_enabled_customers(&self) -> Vec<&Customer> {
-    self.get_enabled_customer_field(|customer| { customer })
+    self.get_enabled_customer_field(&|customer| { customer })
   }
 
-  pub fn get_enabled_customer_field<'a, B, F>(&'a self, func: F) -> Vec<B>
-    where F: Fn(&'a Customer) -> B {
+  pub fn get_enabled_customer_field<'a, B>(&'a self, func: &Fn(&'a Customer) -> B) -> Vec<B> {
 
     let mut outlist: Vec<B> = vec!();
     for customer in self.all_customers.iter() {
