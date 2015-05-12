@@ -101,20 +101,21 @@ impl AllCustomers {
     // be assigned to a suitable variable by the caller
     pub fn set_contract_for_customer_list(self,
         ids: Vec<usize>, status: bool) -> Self {
+        self.update_contract_for_customer_list(ids, &|contract| {
+                Contract {
+                    enabled: status,
+                    .. contract
+                }
+            })
+    }
 
-        // Note: into_iter() not iter(). This turns the vec
-        // into an iterator parmanently, allowing the values
-        // to be moved out.
+    pub fn update_customer_for_id_list(self,
+        ids: Vec<usize>, cls: &Fn(Customer) -> Customer) -> Self {
+
         let new_customers = self.all_customers.into_iter()
         .map(|customer| {
             if ids.contains(&customer.id) {
-                Customer {
-                    contract: Contract {
-                        enabled: status,
-                        .. customer.contract
-                    },
-                    .. customer
-                }
+                cls(customer)
             }
             else {
                 customer
@@ -126,25 +127,35 @@ impl AllCustomers {
         }
     }
 
+    pub fn update_contact(self, customer_id: usize, contact_id: usize,
+        cls: &Fn(Contact) -> Contact) -> Self {
+
+        self.update_customer_for_id_list(vec![customer_id], &|customer| {
+            Customer{
+                contacts: customer.contacts.into_iter()
+                .map(|contact| {
+                    if contact.contact_id == contact_id {
+                        cls(contact)
+                    }
+                    else {
+                        contact
+                    }
+                })
+                .collect(),
+                .. customer
+            }
+        })
+    }
+
     pub fn update_contract_for_customer_list(self,
         ids: Vec<usize>, cls: &Fn(Contract) -> Contract) -> Self {
 
-        let new_customers = self.all_customers.into_iter()
-        .map(|customer| {
-            if ids.contains(&customer.id) {
-                Customer {
-                    contract: cls(customer.contract),
-                    .. customer
-                }
+        self.update_customer_for_id_list(ids, &|customer| {
+            Customer{
+                contract: cls(customer.contract),
+                .. customer
             }
-            else {
-                customer
-            }
-        });
-
-        AllCustomers {
-            all_customers: new_customers.collect()
-        }
+        })
     }
 
 
