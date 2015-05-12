@@ -99,7 +99,7 @@ impl AllCustomers {
 
     // has an additional step of building a new AllCustomers object so it can
     // be assigned to a suitable variable by the caller
-    pub fn set_contract_for_customer(self,
+    pub fn set_contract_for_customer_list(self,
         ids: Vec<usize>, status: bool) -> Self {
 
         // Note: into_iter() not iter(). This turns the vec
@@ -113,6 +113,27 @@ impl AllCustomers {
                         enabled: status,
                         .. customer.contract
                     },
+                    .. customer
+                }
+            }
+            else {
+                customer
+            }
+        });
+
+        AllCustomers {
+            all_customers: new_customers.collect()
+        }
+    }
+
+    pub fn update_contract_for_customer_list(self,
+        ids: Vec<usize>, cls: &Fn(Contract) -> Contract) -> Self {
+
+        let new_customers = self.all_customers.into_iter()
+        .map(|customer| {
+            if ids.contains(&customer.id) {
+                Customer {
+                    contract: cls(customer.contract),
                     .. customer
                 }
             }
