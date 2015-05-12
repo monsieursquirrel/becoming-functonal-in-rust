@@ -4,12 +4,12 @@
 // error in this case is unintuitive.
 
 pub fn print_set_contract_for_customer(self,
-    ids: Vec<usize>, status: bool) -> Vec<Customer>{
+    ids: Vec<usize>, status: bool) -> Self {
 
     // Note: into_iter() not iter(). This turns the vec
     // into an iterator parmanently, allowing the values
     // to be moved out.
-    self.all_customers.into_iter()
+    let new_customers = self.all_customers.into_iter()
     .map(|customer| {
         if ids.contains(&customer.id) {
             Customer {
@@ -23,6 +23,11 @@ pub fn print_set_contract_for_customer(self,
         else {
             customer
         }
-    })
-    .collect()
+    });
+
+    // An additional step of building a new AllCustomers object so it can
+    // be assigned to a suitable variable by the caller.
+    AllCustomers {
+        all_customers: new_customers.collect()
+    }
 }
